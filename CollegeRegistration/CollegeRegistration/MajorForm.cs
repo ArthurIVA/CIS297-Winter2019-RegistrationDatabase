@@ -12,9 +12,18 @@ namespace CollegeRegistration
 {
     public partial class MajorForm : Form
     {
+        RegistrationEntities MajorEntities;
         public MajorForm()
         {
             InitializeComponent();
+            MajorEntities = new RegistrationEntities();
         }
+
+        private void MajorForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
