@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,115 +12,66 @@ namespace CollegeRegistration
 {
     public partial class Form1 : Form
     {
-
-        RegistrationEntities RegistrationEntities;
         public Form1()
         {
             InitializeComponent();
-            RegistrationEntities = new RegistrationEntities();
-            RegistrationEntities.Students.Load();
-            studentsList.DataSource = RegistrationEntities.Students.Local.ToBindingList();
-            studentsList.DisplayMember = nameof(Student.BetterDisplay);
-            RegistrationEntities.Majors.Load();
-            majorsListBox.DataSource = RegistrationEntities.Majors.Local.ToBindingList();
-            majorsListBox.DisplayMember = nameof(Major.NameAndCollege);
-            
-
-            //updateStudentsList();
-            //updateMajorsList();
-
-            var erics = RegistrationEntities.Students.Where(s => s.Name.StartsWith("E")).ToList();
-            erics = erics.Where(s => s.Major.College == "CECS").ToList();
-            foreach( var eric in erics )
-            {
-                ericsClassesLabel.Text += $"{eric.Name} - {eric.Major.Name} - {eric.Major.College}{Environment.NewLine}";
-            }
-
-            // linq to ojbects without lambda extensions syntax
-            /*
-            var query = from Student student in RegistrationEntities.Students
-                        where student.Name == "Eric"
-                        select student;
-
-           foreach( var result in query )
-            {
-                result.
-            }
-            */
-
-            //RegistrationEntities.Students.Remove()
         }
 
-        private void addStudentButton_Click(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedMajor = majorsListBox.SelectedItem as Major;
-            if ( selectedMajor != null )
-            {
-                Student newStudent = new Student
-                {
-                    Name = textBox1.Text,
-                    Major = selectedMajor
-                };
-                RegistrationEntities.Students.Add(newStudent);
-                RegistrationEntities.SaveChanges();
-            }
-            
-            //updateStudentsList();
-
+            objectBox.Items.Add("Student");
+            objectBox.Items.Add("Major");
+            objectBox.Items.Add("Enrollment");
+            objectBox.Items.Add("Section");
+            objectBox.Items.Add("Faculty");
+            objectBox.Items.Add("Course");
         }
 
-        private void updateStudentsList()
+        private void selectObjectButton_Click(object sender, EventArgs e)
         {
-            foreach( var student in RegistrationEntities.Students )
-            {
-                studentsList.Text += $"{student.Name} {student.Major.Name} {student.Major.College}";
-            }
-            
-        }
+            string selected = this.objectBox.GetItemText(this.objectBox.SelectedItem);
 
-        private void updateMajorsList()
-        {
-            foreach (var major in RegistrationEntities.Majors)
+            if(selected == "Student")
             {
-                majorsListBox.Text += $"{major.Name}";
+                StudentForm std = new StudentForm();
+                std.Show();
             }
 
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Major newMajor = new Major()
+            else if (selected == "Faculty")
             {
-                Name = majorNameTextBox.Text,
-                College = "CECS"
-            };
-            RegistrationEntities.Majors.Add(newMajor);
-            RegistrationEntities.SaveChanges();
-            //updateMajorsList();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            var sectionsForm = new Sections();
-            sectionsForm.Show();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var selectedMajor = majorsListBox.SelectedItem as Major;
-            if ( selectedMajor != null )
-            {
-                if ( selectedMajor.Students.Count > 0)
-                {
-                    MessageBox.Show("You can't delete a major that has students!");
-                }
-                else
-                {
-                    RegistrationEntities.Majors.Remove(selectedMajor);
-                    RegistrationEntities.SaveChanges();
-                }
-                
+                FacultyForm fac = new FacultyForm();
+                fac.Show();
             }
+
+            else if (selected == "Major")
+            {
+                MajorForm maj = new MajorForm();
+                maj.Show();
+            }
+
+            else if (selected == "Enrollment")
+            {
+                EnrollmentsForm enr = new EnrollmentsForm();
+                enr.Show();
+            }
+
+            else if (selected == "Section")
+            {
+                SectionForm sec = new SectionForm();
+                sec.Show();
+            }
+
+            else if (selected == "Course")
+            {
+                CourseForm cor = new CourseForm();
+                cor.Show();
+            }
+
+            else
+            {
+
+            }
+
         }
     }
 }
