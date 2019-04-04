@@ -1,30 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CollegeRegistration
 {
     public partial class Form1 : Form
     {
+        RegistrationEntities registrationEntities;
         public Form1()
         {
             InitializeComponent();
+            registrationEntities = new RegistrationEntities();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            objectBox.Items.Add("Student");
-            objectBox.Items.Add("Major");
-            objectBox.Items.Add("Enrollment");
-            objectBox.Items.Add("Section");
-            objectBox.Items.Add("Faculty");
-            objectBox.Items.Add("Course");
+            
         }
 
         private void selectObjectButton_Click(object sender, EventArgs e)
@@ -69,8 +59,13 @@ namespace CollegeRegistration
 
             else
             {
-
+                errorLabel.Text = "Please select a form to fill out from the selected criteria.";
             }
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
     }
