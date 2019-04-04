@@ -17,6 +17,16 @@ namespace CollegeRegistration
         {
             InitializeComponent();
             sectionEntities = new RegistrationEntities();
+            crudList.Enabled = false;
+            courseBox.Enabled = false;
+            facultyBox.Enabled = false;
+            timeBox.Enabled = false;
+            dayBox.Enabled = false;
+            semesterBox.Enabled = false;
+            deleteBox.Enabled = false;
+            submitButton.Enabled = false;
+            searchBox.Enabled = false;
+            searchButton.Enabled = false;
         }
 
         private void submitButton_Click(object sender, EventArgs e)
@@ -35,7 +45,7 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
-
+                readSections();
             }
 
             else if (selected == "Update")
@@ -126,6 +136,53 @@ namespace CollegeRegistration
             {
                 errorLabel.Text = "No section that you have entered does not exist, please enter a valid section.";
                 testLabel.Text = "Please enter a valid Section ID.";
+            }
+        }
+
+        private void readSections()
+        {
+            var sectionCheck = sectionEntities.Sections.Where(s => s.Id > 0);
+
+            readList.Items.Clear();
+            foreach(var section in sectionCheck)
+            {
+                readList.Items.Add($"{section.CourseID} - {section.FacultyID} - {section.Day} - {section.Time} - {section.Semester}{Environment.NewLine}");
+            }
+        }
+
+        private void optionsBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.optionsBox.GetItemText(this.optionsBox.SelectedItem);
+
+            if(selected == "CRUD Operations")
+            {
+                crudList.Enabled = true;
+                courseBox.Enabled = true;
+                facultyBox.Enabled = true;
+                timeBox.Enabled = true;
+                dayBox.Enabled = true;
+                semesterBox.Enabled = true;
+                deleteBox.Enabled = true;
+                submitButton.Enabled = true;
+                searchBox.Enabled = false;
+                searchButton.Enabled = false;
+            }
+            else if(selected == "Search Operation")
+            {
+                searchBox.Enabled = true;
+                searchButton.Enabled = true;
+                crudList.Enabled = false;
+                courseBox.Enabled = false;
+                facultyBox.Enabled = false;
+                timeBox.Enabled = false;
+                dayBox.Enabled = false;
+                semesterBox.Enabled = false;
+                deleteBox.Enabled = false;
+                submitButton.Enabled = false;
+            }
+            else
+            {
+                errorLabel.Text = "Please select a valid option.";
             }
         }
     }

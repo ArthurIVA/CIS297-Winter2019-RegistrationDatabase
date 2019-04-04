@@ -38,6 +38,7 @@
             this.deleteBox = new System.Windows.Forms.TextBox();
             this.majLabel = new System.Windows.Forms.Label();
             this.deleteLabel = new System.Windows.Forms.Label();
+            this.readList = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // majorName
@@ -84,7 +85,7 @@
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(45, 143);
+            this.submitButton.Location = new System.Drawing.Point(45, 154);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(75, 23);
             this.submitButton.TabIndex = 7;
@@ -108,7 +109,7 @@
             // 
             // deleteBox
             // 
-            this.deleteBox.Location = new System.Drawing.Point(187, 116);
+            this.deleteBox.Location = new System.Drawing.Point(234, 113);
             this.deleteBox.Name = "deleteBox";
             this.deleteBox.Size = new System.Drawing.Size(100, 20);
             this.deleteBox.TabIndex = 16;
@@ -118,24 +119,33 @@
             this.majLabel.AutoSize = true;
             this.majLabel.Location = new System.Drawing.Point(42, 116);
             this.majLabel.Name = "majLabel";
-            this.majLabel.Size = new System.Drawing.Size(140, 13);
+            this.majLabel.Size = new System.Drawing.Size(186, 13);
             this.majLabel.TabIndex = 17;
-            this.majLabel.Text = "Major ID (Only for Deletion): ";
+            this.majLabel.Text = "Major ID (For Updating and Deleting): ";
             // 
             // deleteLabel
             // 
             this.deleteLabel.AutoSize = true;
-            this.deleteLabel.Location = new System.Drawing.Point(45, 41);
+            this.deleteLabel.Location = new System.Drawing.Point(42, 37);
             this.deleteLabel.Name = "deleteLabel";
             this.deleteLabel.Size = new System.Drawing.Size(35, 13);
             this.deleteLabel.TabIndex = 18;
             this.deleteLabel.Text = "label1";
             // 
+            // readList
+            // 
+            this.readList.FormattingEnabled = true;
+            this.readList.Location = new System.Drawing.Point(440, 64);
+            this.readList.Name = "readList";
+            this.readList.Size = new System.Drawing.Size(368, 225);
+            this.readList.TabIndex = 20;
+            // 
             // MajorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 322);
+            this.ClientSize = new System.Drawing.Size(848, 424);
+            this.Controls.Add(this.readList);
             this.Controls.Add(this.deleteLabel);
             this.Controls.Add(this.majLabel);
             this.Controls.Add(this.deleteBox);
@@ -167,5 +177,6 @@
         private System.Windows.Forms.TextBox deleteBox;
         private System.Windows.Forms.Label majLabel;
         private System.Windows.Forms.Label deleteLabel;
+        private System.Windows.Forms.ListBox readList;
     }
 }

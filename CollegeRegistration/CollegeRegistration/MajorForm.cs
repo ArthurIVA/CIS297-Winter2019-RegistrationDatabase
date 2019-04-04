@@ -17,6 +17,8 @@ namespace CollegeRegistration
         {
             InitializeComponent();
             MajorEntities = new RegistrationEntities();
+
+            
         }
 
         private void MajorForm_Load(object sender, EventArgs e)
@@ -37,7 +39,7 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
-
+                readMajor();
             }
 
             else if (selected == "Update")
@@ -70,28 +72,47 @@ namespace CollegeRegistration
 
         private void updateMajor()
         {
+            
 
         }
 
         private void readMajor()
         {
+            
+            var majorCheck = MajorEntities.Majors.Where(m => m.Id != 0).ToList();
 
+            readList.Items.Clear();
+            foreach(var major in majorCheck)
+            { 
+                readList.Items.Add($"{major.Name} - {major.College}{Environment.NewLine}");
+            }
         }
 
         private void deleteMajor(int id)
         {
-            var majorCheck = MajorEntities.Majors.Where(m => m.Id == id);
+            var majorCheck = MajorEntities.Majors.Where(m => m.Id == id).ToList();
 
-            if(majorCheck.Any())
+            if (majorCheck.Any())
             {
                 foreach (var major in majorCheck)
                 {
-                    MajorEntities.Majors.Remove(major);
-                    MajorEntities.SaveChanges();
+                    var studentCheck = MajorEntities.Students.Where(s => s.Id == major.Id).ToList();
+
+                    if (studentCheck.Count() > 0)
+                    {
+                        errorLabel.Text = "You cannot delete this Major, there are students who have this major.";
+                    }
+                    else
+                    {
+                        MajorEntities.Majors.Remove(major);
+                        MajorEntities.SaveChanges();
+                        errorLabel.Text = "Major has been deleted.";
+                        deleteLabel.Text = string.Empty;
+                    }
+                    
                 }
 
-                errorLabel.Text = "Major has been deleted.";
-                deleteLabel.Text = string.Empty;
+                deleteLabel.Text = "Should work.";
             }
 
             else
@@ -99,7 +120,6 @@ namespace CollegeRegistration
                 errorLabel.Text = "The major you have entered does not exist, please enter a valid Major.";
                 deleteLabel.Text = "Please enter a valid Major ID.";
             }
-
 
         }
 

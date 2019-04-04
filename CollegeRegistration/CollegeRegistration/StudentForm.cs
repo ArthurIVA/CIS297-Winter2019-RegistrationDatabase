@@ -42,7 +42,7 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
-
+                readStudents();
             }
 
             else if (selected == "Update")
@@ -80,6 +80,11 @@ namespace CollegeRegistration
             {
                 errorLabel.Text = "Error, no Major of that type currently exists.";
             }
+        }
+
+        private void readStudents()
+        {
+
         }
     }
 }
