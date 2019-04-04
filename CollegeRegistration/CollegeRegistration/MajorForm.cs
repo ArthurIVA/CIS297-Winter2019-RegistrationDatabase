@@ -68,6 +68,7 @@ namespace CollegeRegistration
 
             MajorEntities.Majors.Add(newMajor);
             MajorEntities.SaveChanges();
+            errorLabel.Text = "Major Added.";
         }
 
         private void updateMajor()

@@ -209,7 +209,7 @@
             // 
             // searchBox
             // 
-            this.searchBox.Location = new System.Drawing.Point(617, 70);
+            this.searchBox.Location = new System.Drawing.Point(489, 70);
             this.searchBox.Name = "searchBox";
             this.searchBox.Size = new System.Drawing.Size(169, 20);
             this.searchBox.TabIndex = 17;
@@ -225,20 +225,21 @@
             // searchLabel
             // 
             this.searchLabel.AutoSize = true;
-            this.searchLabel.Location = new System.Drawing.Point(486, 73);
+            this.searchLabel.Location = new System.Drawing.Point(486, 54);
             this.searchLabel.Name = "searchLabel";
-            this.searchLabel.Size = new System.Drawing.Size(125, 13);
+            this.searchLabel.Size = new System.Drawing.Size(322, 13);
             this.searchLabel.TabIndex = 19;
-            this.searchLabel.Text = "Please enter a Semester:";
+            this.searchLabel.Text = "Please enter a Semester or a Faculty Name (Only one or the other):";
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(801, 67);
+            this.searchButton.Location = new System.Drawing.Point(664, 67);
             this.searchButton.Name = "searchButton";
             this.searchButton.Size = new System.Drawing.Size(98, 23);
             this.searchButton.TabIndex = 20;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // SectionForm
             // 

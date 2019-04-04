@@ -14,12 +14,7 @@ namespace CollegeRegistration
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            objectBox.Items.Add("Student");
-            objectBox.Items.Add("Major");
-            objectBox.Items.Add("Enrollment");
-            objectBox.Items.Add("Section");
-            objectBox.Items.Add("Faculty");
-            objectBox.Items.Add("Course");
+            
         }
 
         private void selectObjectButton_Click(object sender, EventArgs e)

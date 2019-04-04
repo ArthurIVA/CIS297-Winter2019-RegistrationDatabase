@@ -17,6 +17,13 @@ namespace CollegeRegistration
         {
             InitializeComponent();
             studentEntities = new RegistrationEntities();
+            crudList.Enabled = false;
+            nameBox.Enabled = false;
+            majorBox.Enabled = false;
+            deleteBox.Enabled = false;
+            submitButton.Enabled = false;
+            searchBox.Enabled = false;
+            searchButton.Enabled = false;
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -75,6 +82,7 @@ namespace CollegeRegistration
 
                 studentEntities.Students.Add(newStudent);
                 studentEntities.SaveChanges();
+                errorLabel.Text = "Student Added";
             }
             else
             {
@@ -84,7 +92,94 @@ namespace CollegeRegistration
 
         private void readStudents()
         {
+            var studentCheck = studentEntities.Students.Where(s => s.Id > 0).ToList();
 
+            foreach(var student in studentCheck)
+            {
+                var majorCheck = studentEntities.Majors.Where(m => m.Id == student.MajorID).ToList();
+                string majors = "";
+
+                foreach(var major in majorCheck)
+                {
+                    majors = major.Name;
+                }
+
+                readList.Items.Add($"{student.Name} - " + majors + $"{Environment.NewLine}");
+            }
+        }
+
+        private void searchByMajor(string major)
+        {
+            var majorCheck = studentEntities.Majors.Where(m => m.Name.Contains(major)).ToList();
+            readList.Items.Clear();
+
+            if(majorCheck.Any())
+            {
+                readList.Items.Add("These are the Students that are currently taking this Major: " + $"{Environment.NewLine}");
+                foreach (var majors in majorCheck)
+                {
+                    var studentCheck = studentEntities.Students.Where(s => s.MajorID == majors.Id);
+
+                    if(studentCheck.Any())
+                    {
+                        foreach(var student in studentCheck)
+                        {
+                            readList.Items.Add(student.Name);
+                        }
+                    }
+                    else
+                    {
+                        readList.Items.Add("There are no students studying this major.");
+                    }
+                }
+            }
+            else
+            {
+                readList.Items.Add("There major you entered is not listed.");
+            }
+        }
+
+        private void optionsBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.optionsBox.GetItemText(this.optionsBox.SelectedItem);
+
+            if (selected == "CRUD Operations")
+            {
+                crudList.Enabled = true;
+                nameBox.Enabled = true;
+                majorBox.Enabled = true;
+                deleteBox.Enabled = true;
+                submitButton.Enabled = true;
+                searchBox.Enabled = false;
+                searchButton.Enabled = false;
+            }
+            else if (selected == "Search Operation")
+            {
+                crudList.Enabled = false;
+                nameBox.Enabled = false;
+                majorBox.Enabled = false;
+                deleteBox.Enabled = false;
+                submitButton.Enabled = false;
+                searchBox.Enabled = true;
+                searchButton.Enabled = true;
+            }
+            else
+            {
+                errorLabel.Text = "Please select a valid option.";
+            }
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(searchBox.Text))
+            {
+                readList.Items.Add("Please enter some data.");
+                searchBox.Clear();
+            }
+            else
+            {
+                searchByMajor(searchBox.Text);
+            }
         }
     }
 }

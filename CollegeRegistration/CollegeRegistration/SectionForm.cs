@@ -83,6 +83,7 @@ namespace CollegeRegistration
 
                 sectionEntities.Sections.Add(newSection);
                 sectionEntities.SaveChanges();
+                errorLabel.Text = "Section Added.";
             }
 
             else if (courseCheck.Any() && (facultyCheck.Any() == false))
@@ -99,11 +100,6 @@ namespace CollegeRegistration
             {
                 errorLabel.Text = "Neither the course nor the faculty you submitted exist, please enter valid data.";
             }
-        }
-
-        private void searchBySemester(string semester)
-        {
-
         }
 
         private void crudList_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,6 +146,53 @@ namespace CollegeRegistration
             }
         }
 
+        private void searchBySemesterOrFacultyName(string semOrFac)
+        {
+            readList.Items.Clear();
+            var semesterCheck = sectionEntities.Sections.Where(s => s.Semester.Contains(semOrFac)).ToList();
+            var facultyCheck = sectionEntities.Faculties.Where(f => f.Name.Contains(semOrFac)).ToList();
+
+            if (semesterCheck.Any())
+            {
+                readList.Items.Add("Here are the Sections in the " + semOrFac + " Semester: " + $"{Environment.NewLine}");
+                foreach (var semester in semesterCheck)
+                {
+                    readList.Items.Add($"{semester.Id} - {semester.CourseID} {Environment.NewLine}");
+                }
+            }
+            else if(facultyCheck.Any())
+            {
+                readList.Items.Add("Here are the Sections taught by Professor " + semOrFac + ": " + $"{Environment.NewLine}");
+                foreach(var fac in facultyCheck)
+                {
+                    var idCheck = sectionEntities.Sections.Where(s => s.FacultyID == fac.Id).ToList();
+                    
+                    if(idCheck.Any())
+                    {
+                        foreach (var id in idCheck)
+                        {
+                            var testCheck = sectionEntities.Courses.Where(c => c.Id == id.CourseID).ToList();
+
+                            foreach(var test in testCheck)
+                            {
+                                readList.Items.Add($"{id.Id} - {test.Name} {Environment.NewLine}");
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                        readList.Items.Add("There are no sections taught by this faculty member.");
+                    }
+                    
+                }
+            }
+            else
+            {
+                readList.Items.Add("There are no sections either in the semester added or the faculty member submitted. Please enter a new semester or faculty member.");
+            }
+        }
+
         private void optionsBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.optionsBox.GetItemText(this.optionsBox.SelectedItem);
@@ -183,6 +226,19 @@ namespace CollegeRegistration
             else
             {
                 errorLabel.Text = "Please select a valid option.";
+            }
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            if(string.IsNullOrEmpty(searchBox.Text))
+            {
+                readList.Items.Add("Please enter some data.");
+                searchBox.Clear();
+            }
+            else
+            {
+                searchBySemesterOrFacultyName(searchBox.Text);
             }
         }
     }

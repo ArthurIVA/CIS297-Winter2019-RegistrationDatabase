@@ -35,6 +35,9 @@
             this.submitButton = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.crudList = new System.Windows.Forms.ComboBox();
+            this.readList = new System.Windows.Forms.ListBox();
+            this.facultyIDLabel = new System.Windows.Forms.Label();
+            this.deleteBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // facultyName
@@ -73,7 +76,7 @@
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(44, 105);
+            this.submitButton.Location = new System.Drawing.Point(44, 133);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(108, 31);
             this.submitButton.TabIndex = 6;
@@ -102,11 +105,38 @@
             this.crudList.Size = new System.Drawing.Size(121, 21);
             this.crudList.TabIndex = 8;
             // 
+            // readList
+            // 
+            this.readList.FormattingEnabled = true;
+            this.readList.Location = new System.Drawing.Point(420, 12);
+            this.readList.Name = "readList";
+            this.readList.Size = new System.Drawing.Size(410, 251);
+            this.readList.TabIndex = 20;
+            // 
+            // facultyIDLabel
+            // 
+            this.facultyIDLabel.AutoSize = true;
+            this.facultyIDLabel.Location = new System.Drawing.Point(42, 100);
+            this.facultyIDLabel.Name = "facultyIDLabel";
+            this.facultyIDLabel.Size = new System.Drawing.Size(182, 13);
+            this.facultyIDLabel.TabIndex = 21;
+            this.facultyIDLabel.Text = "Faculty ID (For Updating or Deletion):";
+            // 
+            // deleteBox
+            // 
+            this.deleteBox.Location = new System.Drawing.Point(230, 97);
+            this.deleteBox.Name = "deleteBox";
+            this.deleteBox.Size = new System.Drawing.Size(120, 20);
+            this.deleteBox.TabIndex = 22;
+            // 
             // FacultyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(613, 331);
+            this.ClientSize = new System.Drawing.Size(911, 450);
+            this.Controls.Add(this.deleteBox);
+            this.Controls.Add(this.facultyIDLabel);
+            this.Controls.Add(this.readList);
             this.Controls.Add(this.crudList);
             this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.submitButton);
@@ -131,5 +161,8 @@
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.ComboBox crudList;
+        private System.Windows.Forms.ListBox readList;
+        private System.Windows.Forms.Label facultyIDLabel;
+        private System.Windows.Forms.TextBox deleteBox;
     }
 }

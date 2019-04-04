@@ -32,7 +32,7 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
-
+                readFaculty();
             }
 
             else if (selected == "Update")
@@ -61,6 +61,25 @@ namespace CollegeRegistration
 
             facultyEntities.Faculties.Add(newFaculty);
             facultyEntities.SaveChanges();
+            errorLabel.Text = "Faculty Added.";
+        }
+
+        private void readFaculty()
+        {
+            var facultyCheck = facultyEntities.Faculties.Where(f => f.Id > 0).ToList();
+
+            foreach(var fac in facultyCheck)
+            {
+                var sectionCheck = facultyEntities.Sections.Where(s => s.FacultyID == fac.Id).ToList();
+                string sections = "";
+
+                foreach(var sec in sectionCheck)
+                {
+                    sections += " - " + sec.Id;
+                }
+
+                readList.Items.Add($"{fac.Name} - {fac.PhoneNumber} - " + sections + $"{Environment.NewLine}");
+            }
         }
     }
 }

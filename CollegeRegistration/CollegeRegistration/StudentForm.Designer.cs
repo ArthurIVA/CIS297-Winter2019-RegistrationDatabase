@@ -159,6 +159,7 @@
             this.searchButton.TabIndex = 22;
             this.searchButton.Text = "Search";
             this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // optionsBox
             // 
@@ -170,6 +171,7 @@
             this.optionsBox.Name = "optionsBox";
             this.optionsBox.Size = new System.Drawing.Size(121, 21);
             this.optionsBox.TabIndex = 23;
+            this.optionsBox.SelectedIndexChanged += new System.EventHandler(this.optionsBox_SelectedIndexChanged);
             // 
             // StudentForm
             // 
