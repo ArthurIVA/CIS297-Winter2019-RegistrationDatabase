@@ -251,7 +251,7 @@ namespace CollegeRegistration
         {
             string selected = this.crudList.GetItemText(this.crudList.SelectedItem);
 
-            if(selected == "Update")
+            if(selected == "Update" || selected == "Delete")
             {
                 deleteBox.Enabled = true;
             }

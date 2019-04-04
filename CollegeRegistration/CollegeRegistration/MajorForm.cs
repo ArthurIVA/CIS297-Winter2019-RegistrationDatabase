@@ -156,6 +156,7 @@ namespace CollegeRegistration
 
             if (selected == "Delete")
             {
+                deleteBox.Enabled = true;
                 deleteLabel.Text = "PLEASE ENTER A VALID MAJOR ID TO BE DELETED FROM THE TABLE.";
             }
 

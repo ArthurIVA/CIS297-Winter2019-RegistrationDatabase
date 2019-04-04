@@ -113,6 +113,7 @@ namespace CollegeRegistration
 
             if (selected == "Delete")
             {
+                deleteBox.Enabled = true;
                 testLabel.Text = "TO DELETE A ROW, PLEASE ENTER THE SECTION ID OF THE SECTION YOU'D LIKE TO DELETE.";
             }
 
