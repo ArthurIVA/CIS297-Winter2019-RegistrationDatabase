@@ -45,12 +45,17 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
+                courseBox.Enabled = false;
+                facultyBox.Enabled = false;
+                timeBox.Enabled = false;
+                dayBox.Enabled = false;
+                semesterBox.Enabled = false;
                 readSections();
             }
 
             else if (selected == "Update")
             {
-
+                updateSection(courseBox.Text, facultyBox.Text, timeBox.Text, dayBox.Text, semesterBox.Text, Convert.ToInt32(deleteBox.Text));
             }
 
             else if (selected == "Delete")
@@ -109,6 +114,11 @@ namespace CollegeRegistration
             if (selected == "Delete")
             {
                 testLabel.Text = "TO DELETE A ROW, PLEASE ENTER THE SECTION ID OF THE SECTION YOU'D LIKE TO DELETE.";
+            }
+
+            if (selected == "Update")
+            {
+                deleteBox.Enabled = true;
             }
         }
 
@@ -193,6 +203,54 @@ namespace CollegeRegistration
             }
         }
 
+        private void updateSection(string cID, string fID, string times, string days, string semester, int secID)
+        {
+            var sectionCheck = sectionEntities.Sections.Where(s => s.Id == secID).ToList();
+
+            if(sectionCheck.Any())
+            {
+                foreach(var section in sectionCheck)
+                {
+                    if (!string.IsNullOrEmpty(cID))
+                    {
+                        section.CourseID = Convert.ToInt32(cID);
+                        sectionEntities.SaveChanges();
+                    }
+                    if(!string.IsNullOrEmpty(fID))
+                    {
+                        section.FacultyID = Convert.ToInt32(fID);
+                        sectionEntities.SaveChanges();
+                    }
+                    if(!string.IsNullOrEmpty(times))
+                    {
+                        section.Time = times;
+                        sectionEntities.SaveChanges();
+                    }
+                    if(!string.IsNullOrEmpty(days))
+                    {
+                        section.Day = days;
+                        sectionEntities.SaveChanges();
+                    }
+                    if(!string.IsNullOrEmpty(semester))
+                    {
+                        section.Semester = semester;
+                        sectionEntities.SaveChanges();
+                    }
+                }
+
+                errorLabel.Text = "Section has been updated.";
+                courseBox.Clear();
+                facultyBox.Clear();
+                timeBox.Clear();
+                dayBox.Clear();
+                semesterBox.Clear();
+            }
+            else
+            {
+                errorLabel.Text = "Incorrect Section ID.";
+            }
+        }
+
         private void optionsBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.optionsBox.GetItemText(this.optionsBox.SelectedItem);
@@ -205,7 +263,7 @@ namespace CollegeRegistration
                 timeBox.Enabled = true;
                 dayBox.Enabled = true;
                 semesterBox.Enabled = true;
-                deleteBox.Enabled = true;
+                deleteBox.Enabled = false;
                 submitButton.Enabled = true;
                 searchBox.Enabled = false;
                 searchButton.Enabled = false;

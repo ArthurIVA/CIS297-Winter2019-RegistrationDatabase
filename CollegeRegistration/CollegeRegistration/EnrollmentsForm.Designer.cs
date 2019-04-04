@@ -58,6 +58,7 @@
             this.crudList.Name = "crudList";
             this.crudList.Size = new System.Drawing.Size(223, 21);
             this.crudList.TabIndex = 11;
+            this.crudList.SelectedIndexChanged += new System.EventHandler(this.crudList_SelectedIndexChanged);
             // 
             // sectionLabel
             // 

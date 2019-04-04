@@ -17,8 +17,7 @@ namespace CollegeRegistration
         {
             InitializeComponent();
             MajorEntities = new RegistrationEntities();
-
-            
+            deleteBox.Enabled = false;
         }
 
         private void MajorForm_Load(object sender, EventArgs e)
@@ -39,12 +38,14 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
+                nameBox.Enabled = false;
+                collegeBox.Enabled = false;
                 readMajor();
             }
 
             else if (selected == "Update")
             {
-
+                updateMajor(nameBox.Text, collegeBox.Text, Convert.ToInt32(deleteBox.Text));
             }
 
             else if (selected == "Delete")
@@ -71,9 +72,34 @@ namespace CollegeRegistration
             errorLabel.Text = "Major Added.";
         }
 
-        private void updateMajor()
+        private void updateMajor(string mName, string mCollege, int mID)
         {
-            
+            var majorCheck = MajorEntities.Majors.Where(m => m.Id == mID).ToList();
+
+            if(majorCheck.Any())
+            {
+                foreach(var major in majorCheck)
+                {
+                    if (!string.IsNullOrEmpty(mName))
+                    {
+                        major.Name = mName;
+                        MajorEntities.SaveChanges();
+                    }
+                    if (!string.IsNullOrEmpty(mCollege))
+                    {
+                        major.College = mCollege;
+                        MajorEntities.SaveChanges();
+                    }
+                }
+
+                errorLabel.Text = "Major has been updated.";
+                nameBox.Clear();
+                collegeBox.Clear();
+            }
+            else
+            {
+                errorLabel.Text = "Invalid Major ID.";
+            }
 
         }
 
@@ -131,6 +157,11 @@ namespace CollegeRegistration
             if (selected == "Delete")
             {
                 deleteLabel.Text = "PLEASE ENTER A VALID MAJOR ID TO BE DELETED FROM THE TABLE.";
+            }
+
+            if(selected == "Update")
+            {
+                deleteBox.Enabled = true;
             }
         }
     }

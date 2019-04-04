@@ -17,6 +17,7 @@ namespace CollegeRegistration
         {
             InitializeComponent();
             facultyEntities = new RegistrationEntities();
+            deleteBox.Enabled = false;
         }
 
         private void submitButton_Click(object sender, EventArgs e)
@@ -32,12 +33,14 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
+                nameBox.Enabled = false;
+                nameBox.Enabled = false;
                 readFaculty();
             }
 
             else if (selected == "Update")
             {
-
+                updateFaculty(nameBox.Text, numberBox.Text, Convert.ToInt32(deleteBox.Text));
             }
 
             else if (selected == "Delete")
@@ -79,6 +82,46 @@ namespace CollegeRegistration
                 }
 
                 readList.Items.Add($"{fac.Name} - {fac.PhoneNumber} - " + sections + $"{Environment.NewLine}");
+            }
+        }
+
+        private void updateFaculty(string fName, string fNumber, int facID)
+        {
+            var facCheck = facultyEntities.Faculties.Where(f => f.Id == facID).ToList();
+
+            if(facCheck.Any())
+            {
+                foreach(var fac in facCheck)
+                {
+                    if(!string.IsNullOrEmpty(fName))
+                    {
+                        fac.Name = fName;
+                        facultyEntities.SaveChanges();
+                    }
+                    if(!string.IsNullOrEmpty(fNumber))
+                    {
+                        fac.PhoneNumber = fNumber;
+                        facultyEntities.SaveChanges();
+                    }
+                }
+
+                errorLabel.Text = "Faculty has been updated.";
+                nameBox.Clear();
+                numberBox.Clear();
+            }
+            else
+            {
+                errorLabel.Text = "Invalid Faculty ID.";
+            }
+        }
+
+        private void crudList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.crudList.GetItemText(this.crudList.SelectedItem);
+
+            if(selected == "Update")
+            {
+                deleteBox.Enabled = true;
             }
         }
     }

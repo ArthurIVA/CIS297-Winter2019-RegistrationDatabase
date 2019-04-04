@@ -40,12 +40,15 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
+                sectionBox.Enabled = false;
+                studentBox.Enabled = false;
+                gradeBox.Enabled = false;
                 readEnrollments();
             }
 
             else if (selected == "Update")
             {
-
+                updateEnrollments(sectionBox.Text, studentBox.Text, gradeBox.Text, Convert.ToInt32(deleteBox.Text));
             }
 
             else if (selected == "Delete")
@@ -165,6 +168,42 @@ namespace CollegeRegistration
             }
         }
 
+        private void updateEnrollments(string secID, string stuID, string grade, int enrollID)
+        {
+            var enrollCheck = enrollmentEntities.Enrollments.Where(e => e.Id == enrollID).ToList();
+
+            if (enrollCheck.Any())
+            {
+                foreach(var enroll in enrollCheck)
+                {
+                    if(!string.IsNullOrEmpty(secID))
+                    {
+                        enroll.SectionID = Convert.ToInt32(secID);
+                        enrollmentEntities.SaveChanges();
+                    }
+                    if(!string.IsNullOrEmpty(stuID))
+                    {
+                        enroll.StudentID = Convert.ToInt32(stuID);
+                        enrollmentEntities.SaveChanges();
+                    }
+                    if (!string.IsNullOrEmpty(grade))
+                    {
+                        enroll.Grade = grade;
+                        enrollmentEntities.SaveChanges();
+                    }
+                }
+
+                errorLabel.Text = "The Enrollment has been updated.";
+                sectionBox.Clear();
+                studentBox.Clear();
+                gradeBox.Clear();
+            }
+            else
+            {
+                errorLabel.Text = "Incorrect Enrollment ID.";
+            }
+        }
+
         private void optionsBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.optionsBox.GetItemText(this.optionsBox.SelectedItem);
@@ -205,6 +244,20 @@ namespace CollegeRegistration
             else
             {
                 searchByStudentOrSemester(searchBox.Text);
+            }
+        }
+
+        private void crudList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.crudList.GetItemText(this.crudList.SelectedItem);
+
+            if(selected == "Update")
+            {
+                deleteBox.Enabled = true;
+            }
+            else
+            {
+                deleteBox.Enabled = false;
             }
         }
     }

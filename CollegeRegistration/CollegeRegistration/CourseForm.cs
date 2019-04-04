@@ -43,12 +43,16 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
+                nameBox.Enabled = false;
+                numberBox.Enabled = false;
+                creditsBox.Enabled = false;
+                deptBox.Enabled = false;
                 readCourse();
             }
 
             else if (selected == "Update")
             {
-
+                updateCourse(nameBox.Text, numberBox.Text, creditsBox.Text, deptBox.Text, Convert.ToInt32(deleteBox.Text));
             }
 
             else if (selected == "Delete")
@@ -109,6 +113,48 @@ namespace CollegeRegistration
             }
         }
 
+        private void updateCourse(string cName, string cNumber, string cCredits, string cDept, int courseID)
+        {
+            var courseCheck = courseEntities.Courses.Where(c => c.Id == courseID).ToList();
+
+            if (courseCheck.Any())
+            {
+                foreach(var course in courseCheck)
+                {
+                    if(!string.IsNullOrEmpty(cName))
+                    {
+                        course.Name = cName;
+                        courseEntities.SaveChanges();
+                    }
+                    if (!string.IsNullOrEmpty(cNumber))
+                    {
+                        course.Number = cNumber;
+                        courseEntities.SaveChanges();
+                    }
+                    if (!string.IsNullOrEmpty(cCredits))
+                    {
+                        course.Credits = Convert.ToInt32(cCredits);
+                        courseEntities.SaveChanges();
+                    }
+                    if (!string.IsNullOrEmpty(cDept))
+                    {
+                        course.Department = cDept;
+                        courseEntities.SaveChanges();
+                    }
+                }
+
+                errorLabel.Text = "The Course has been updated.";
+                nameBox.Clear();
+                numberBox.Clear();
+                creditsBox.Clear();
+                deptBox.Clear();
+            }
+            else
+            {
+                errorLabel.Text = "Incorrect Course ID.";
+            }
+        }
+
         private void optionsBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.optionsBox.GetItemText(this.optionsBox.SelectedItem);
@@ -120,7 +166,7 @@ namespace CollegeRegistration
                 numberBox.Enabled = true;
                 creditsBox.Enabled = true;
                 deptBox.Enabled = true;
-                deleteBox.Enabled = true;
+                deleteBox.Enabled = false;
                 submitButton.Enabled = true;
                 searchBox.Enabled = false;
                 searchButton.Enabled = false;
@@ -153,6 +199,16 @@ namespace CollegeRegistration
             else
             {
                 searchByDepartment(searchBox.Text);
+            }
+        }
+
+        private void crudList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.crudList.GetItemText(this.crudList.SelectedItem);
+
+            if (selected == "Update")
+            {
+                deleteBox.Enabled = true;
             }
         }
     }

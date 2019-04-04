@@ -104,6 +104,7 @@
             this.crudList.Name = "crudList";
             this.crudList.Size = new System.Drawing.Size(121, 21);
             this.crudList.TabIndex = 8;
+            this.crudList.SelectedIndexChanged += new System.EventHandler(this.crudList_SelectedIndexChanged);
             // 
             // readList
             // 

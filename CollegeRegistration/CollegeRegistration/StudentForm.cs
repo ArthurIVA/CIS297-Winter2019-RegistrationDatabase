@@ -49,12 +49,14 @@ namespace CollegeRegistration
 
             else if (selected == "Read")
             {
+                nameBox.Enabled = false;
+                majorBox.Enabled = false;
                 readStudents();
             }
 
             else if (selected == "Update")
             {
-
+                updateStudent(nameBox.Text, majorBox.Text, Convert.ToInt32(deleteBox.Text));
             }
 
             else if (selected == "Delete")
@@ -108,6 +110,32 @@ namespace CollegeRegistration
             }
         }
 
+        private void updateStudent(string sName, string sMajor, int sID)
+        {
+            var studentCheck = studentEntities.Students.Where(s => s.Id == sID).ToList();
+
+            if(studentCheck.Any())
+            {
+                foreach(var student in studentCheck)
+                {
+                    if(!string.IsNullOrEmpty(sName))
+                    {
+                        student.Name = sName;
+                        studentEntities.SaveChanges();
+                    }
+                    if (!string.IsNullOrEmpty(sMajor))
+                    {
+                        student.MajorID = Convert.ToInt32(sMajor);
+                        studentEntities.SaveChanges();
+                    }
+                }
+
+                errorLabel.Text = "Student has been updated.";
+                nameBox.Clear();
+                majorBox.Clear();
+            }
+        }
+
         private void searchByMajor(string major)
         {
             var majorCheck = studentEntities.Majors.Where(m => m.Name.Contains(major)).ToList();
@@ -148,7 +176,7 @@ namespace CollegeRegistration
                 crudList.Enabled = true;
                 nameBox.Enabled = true;
                 majorBox.Enabled = true;
-                deleteBox.Enabled = true;
+                deleteBox.Enabled = false;
                 submitButton.Enabled = true;
                 searchBox.Enabled = false;
                 searchButton.Enabled = false;
@@ -179,6 +207,16 @@ namespace CollegeRegistration
             else
             {
                 searchByMajor(searchBox.Text);
+            }
+        }
+
+        private void crudList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.crudList.GetItemText(this.crudList.SelectedItem);
+
+            if (selected == "Update")
+            {
+                deleteBox.Enabled = true;
             }
         }
     }
