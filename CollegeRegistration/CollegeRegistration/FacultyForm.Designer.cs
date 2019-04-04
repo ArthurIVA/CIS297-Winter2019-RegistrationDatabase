@@ -30,10 +30,11 @@
         {
             this.facultyName = new System.Windows.Forms.Label();
             this.facultyPhoneNumber = new System.Windows.Forms.Label();
-            this.facultySection = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.nameBox = new System.Windows.Forms.TextBox();
+            this.numberBox = new System.Windows.Forms.TextBox();
+            this.submitButton = new System.Windows.Forms.Button();
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.crudList = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // facultyName
@@ -56,49 +57,64 @@
             this.facultyPhoneNumber.TabIndex = 1;
             this.facultyPhoneNumber.Text = "Phone Number:";
             // 
-            // facultySection
+            // nameBox
             // 
-            this.facultySection.AutoSize = true;
-            this.facultySection.Location = new System.Drawing.Point(41, 97);
-            this.facultySection.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.facultySection.Name = "facultySection";
-            this.facultySection.Size = new System.Drawing.Size(46, 13);
-            this.facultySection.TabIndex = 2;
-            this.facultySection.Text = "Section:";
+            this.nameBox.Location = new System.Drawing.Point(84, 40);
+            this.nameBox.Name = "nameBox";
+            this.nameBox.Size = new System.Drawing.Size(100, 20);
+            this.nameBox.TabIndex = 3;
             // 
-            // textBox1
+            // numberBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(84, 40);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 3;
+            this.numberBox.Location = new System.Drawing.Point(127, 66);
+            this.numberBox.Name = "numberBox";
+            this.numberBox.Size = new System.Drawing.Size(100, 20);
+            this.numberBox.TabIndex = 5;
             // 
-            // textBox2
+            // submitButton
             // 
-            this.textBox2.Location = new System.Drawing.Point(92, 94);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 4;
+            this.submitButton.Location = new System.Drawing.Point(44, 105);
+            this.submitButton.Name = "submitButton";
+            this.submitButton.Size = new System.Drawing.Size(108, 31);
+            this.submitButton.TabIndex = 6;
+            this.submitButton.Text = "Submit";
+            this.submitButton.UseVisualStyleBackColor = true;
+            this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
             // 
-            // textBox3
+            // errorLabel
             // 
-            this.textBox3.Location = new System.Drawing.Point(127, 66);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 5;
+            this.errorLabel.AutoSize = true;
+            this.errorLabel.Location = new System.Drawing.Point(41, 151);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(0, 13);
+            this.errorLabel.TabIndex = 7;
+            // 
+            // crudList
+            // 
+            this.crudList.FormattingEnabled = true;
+            this.crudList.Items.AddRange(new object[] {
+            "Create",
+            "Read",
+            "Update",
+            "Delete"});
+            this.crudList.Location = new System.Drawing.Point(44, 12);
+            this.crudList.Name = "crudList";
+            this.crudList.Size = new System.Drawing.Size(121, 21);
+            this.crudList.TabIndex = 8;
             // 
             // FacultyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 234);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.facultySection);
+            this.ClientSize = new System.Drawing.Size(613, 331);
+            this.Controls.Add(this.crudList);
+            this.Controls.Add(this.errorLabel);
+            this.Controls.Add(this.submitButton);
+            this.Controls.Add(this.numberBox);
+            this.Controls.Add(this.nameBox);
             this.Controls.Add(this.facultyPhoneNumber);
             this.Controls.Add(this.facultyName);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FacultyForm";
             this.Text = "FacultyForm";
             this.ResumeLayout(false);
@@ -110,9 +126,10 @@
 
         private System.Windows.Forms.Label facultyName;
         private System.Windows.Forms.Label facultyPhoneNumber;
-        private System.Windows.Forms.Label facultySection;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox nameBox;
+        private System.Windows.Forms.TextBox numberBox;
+        private System.Windows.Forms.Button submitButton;
+        private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.ComboBox crudList;
     }
 }

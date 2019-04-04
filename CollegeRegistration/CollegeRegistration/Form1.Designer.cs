@@ -43,7 +43,7 @@
             "Course",
             "Enrollment",
             "Section"});
-            this.objectBox.Location = new System.Drawing.Point(192, 76);
+            this.objectBox.Location = new System.Drawing.Point(45, 69);
             this.objectBox.Margin = new System.Windows.Forms.Padding(2);
             this.objectBox.Name = "objectBox";
             this.objectBox.Size = new System.Drawing.Size(112, 21);
@@ -52,7 +52,7 @@
             // 
             // selectObjectButton
             // 
-            this.selectObjectButton.Location = new System.Drawing.Point(339, 76);
+            this.selectObjectButton.Location = new System.Drawing.Point(45, 112);
             this.selectObjectButton.Margin = new System.Windows.Forms.Padding(2);
             this.selectObjectButton.Name = "selectObjectButton";
             this.selectObjectButton.Size = new System.Drawing.Size(60, 31);

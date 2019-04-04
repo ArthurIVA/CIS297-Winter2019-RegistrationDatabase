@@ -24,6 +24,93 @@ namespace CollegeRegistration
 
         }
 
-        
+        private void submitButton_Click(object sender, EventArgs e)
+        {
+            string selected = this.majorOptions.GetItemText(this.majorOptions.SelectedItem);
+
+            if (selected == "Create")
+            {
+                addMajor(nameBox.Text, collegeBox.Text);
+                nameBox.Clear();
+                collegeBox.Clear();
+            }
+
+            else if (selected == "Read")
+            {
+
+            }
+
+            else if (selected == "Update")
+            {
+
+            }
+
+            else if (selected == "Delete")
+            {
+                deleteMajor(Convert.ToInt32(deleteBox.Text));
+            }
+
+            else
+            {
+                errorLabel.Text = "Please enter a valid operation option.";
+            }
+        }
+
+        private void addMajor(string name, string college)
+        {
+            Major newMajor = new Major()
+            {
+                Name = name,
+                College = college
+            };
+
+            MajorEntities.Majors.Add(newMajor);
+            MajorEntities.SaveChanges();
+        }
+
+        private void updateMajor()
+        {
+
+        }
+
+        private void readMajor()
+        {
+
+        }
+
+        private void deleteMajor(int id)
+        {
+            var majorCheck = MajorEntities.Majors.Where(m => m.Id == id);
+
+            if(majorCheck.Any())
+            {
+                foreach (var major in majorCheck)
+                {
+                    MajorEntities.Majors.Remove(major);
+                    MajorEntities.SaveChanges();
+                }
+
+                errorLabel.Text = "Major has been deleted.";
+                deleteLabel.Text = string.Empty;
+            }
+
+            else
+            {
+                errorLabel.Text = "The major you have entered does not exist, please enter a valid Major.";
+                deleteLabel.Text = "Please enter a valid Major ID.";
+            }
+
+
+        }
+
+        private void majorOptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.majorOptions.GetItemText(this.majorOptions.SelectedItem);
+
+            if (selected == "Delete")
+            {
+                deleteLabel.Text = "PLEASE ENTER A VALID MAJOR ID TO BE DELETED FROM THE TABLE.";
+            }
+        }
     }
 }
